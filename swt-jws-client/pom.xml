@@ -7,4 +7,23 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>swt-jws-client</artifactId>
+
+    <profiles>
+        <profile>
+            <id>linux64</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.swt</groupId>
+                    <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+                    <version>${swt.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
