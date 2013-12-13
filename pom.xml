@@ -6,6 +6,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>swt-jws-client</module>
+        <module>swt-jws-backend</module>
     </modules>
 
 
