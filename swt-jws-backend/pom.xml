@@ -15,6 +15,7 @@
         <sign.storetype>pkcs12</sign.storetype>
         <sign.keypass>signer12</sign.keypass>
         <sign.alias>signer</sign.alias>
+        <path.2.jnlp>${project.build.directory}/${project.artifactId}-${project.version}/webstart/launch.jnlp</path.2.jnlp>
     </properties>
 
 
@@ -73,10 +74,45 @@
                                     <version>${project.parent.version}</version>
                                     <mainClass>pl.lrozek.jws.swt.main.Main</mainClass>
                                 </jarResource>
+                                <jarResource>
+                                    <groupId>org.eclipse.swt</groupId>
+                                    <artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
+                                    <version>${swt.version}</version>
+                                </jarResource>
+                                <jarResource>
+                                    <groupId>org.eclipse.swt</groupId>
+                                    <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
+                                    <version>${swt.version}</version>
+                                </jarResource>
+                                <jarResource>
+                                    <groupId>org.eclipse.swt</groupId>
+                                    <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+                                    <version>${swt.version}</version>
+                                </jarResource>
                             </jarResources>
                         </jnlpFile>
                     </jnlpFiles>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <target>
+                                <!-- fix jnlp -->
+                                <replaceregexp byline="true" file="${path.2.jnlp}" match="^.*org.eclipse.swt.*version=&quot;\d.*$" replace="" />
+                                <replaceregexp byline="true" file="${path.2.jnlp}" match="\$\$swtVersionPlaceHolder" replace="${swt.version}" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
